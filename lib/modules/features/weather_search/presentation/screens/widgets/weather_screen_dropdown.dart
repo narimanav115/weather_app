@@ -25,7 +25,7 @@ class WeatherScreenDropdown extends StatelessWidget {
         leadingIcon: const Icon(Icons.search, color: Colors.white),
         inputFormatters: [
           FilteringTextInputFormatter.allow(
-            RegExp('[a-zA-Z]'),
+            RegExp(r'^[a-zA-Z_ ]*$'),
           ),
         ],
         trailingIcon: GestureDetector(
