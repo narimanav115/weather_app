@@ -30,7 +30,7 @@ class WeatherScreenDropdown extends StatelessWidget {
         ],
         trailingIcon: GestureDetector(
           onTap: onClear,
-          behavior: HitTestBehavior.opaque,
+          behavior: HitTestBehavior.translucent,
           child: const SizedBox(
             height: 30,
             width: 50,
