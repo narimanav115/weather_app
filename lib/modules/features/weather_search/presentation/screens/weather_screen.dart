@@ -20,6 +20,8 @@ class WeatherScreen extends StatefulWidget {
 
 class _WeatherScreenState extends State<WeatherScreen> {
   late final TextEditingController _controller;
+  late final FocusNode _focusNode;
+
   late final WeatherScreenBloc _bloc;
 
   Timer? _timer;
@@ -28,6 +30,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   void initState() {
     super.initState();
     _bloc = context.read();
+    _focusNode = FocusNode();
     _controller = TextEditingController();
     _controller.addListener(_onQueryChanged);
   }
@@ -49,7 +52,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 80),
                 WeatherScreenDropdown(
                   controller: _controller,
                   onClear: () {
@@ -57,12 +60,14 @@ class _WeatherScreenState extends State<WeatherScreen> {
                     _timer?.cancel();
                     _bloc.add(const WeatherScreenEvent.clear());
                   },
+                  focusNode: _focusNode,
                   onSelected: (city) {
                     if (city != null) {
                       _bloc.add(WeatherScreenEvent.selectCity(city));
                       _controller.text = city.name;
                     }
                     _timer?.cancel();
+                    _focusNode.unfocus();
                   },
                   cities: state.cities,
                 ),

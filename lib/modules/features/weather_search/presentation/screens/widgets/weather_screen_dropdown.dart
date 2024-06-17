@@ -5,6 +5,7 @@ import '../../../domain/models/city_model.dart';
 
 class WeatherScreenDropdown extends StatelessWidget {
   final TextEditingController controller;
+  final FocusNode? focusNode;
   final VoidCallback onClear;
   final ValueChanged<CityModel?>? onSelected;
   final Iterable<CityModel> cities;
@@ -12,6 +13,7 @@ class WeatherScreenDropdown extends StatelessWidget {
   const WeatherScreenDropdown({
     super.key,
     required this.controller,
+    this.focusNode,
     required this.onClear,
     this.onSelected,
     required this.cities,
@@ -20,7 +22,7 @@ class WeatherScreenDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) => DropdownMenu<CityModel>(
         menuHeight: 150,
-        leadingIcon: const Icon(Icons.search),
+        leadingIcon: const Icon(Icons.search, color: Colors.white),
         inputFormatters: [
           FilteringTextInputFormatter.allow(
             RegExp('[a-zA-Z]'),
@@ -28,14 +30,15 @@ class WeatherScreenDropdown extends StatelessWidget {
         ],
         trailingIcon: GestureDetector(
           onTap: onClear,
-          child: const SizedBox.square(
-            dimension: 50,
-            child: Icon(
-              Icons.cancel,
-              size: 20,
-            ),
+          behavior: HitTestBehavior.opaque,
+          child: const SizedBox(
+            height: 30,
+            width: 50,
+            child: Icon(Icons.cancel, size: 20, color: Colors.white),
           ),
         ),
+        textStyle: const TextStyle(fontSize: 20, color: Colors.white),
+        focusNode: focusNode,
         controller: controller,
         onSelected: onSelected,
         expandedInsets: const EdgeInsets.all(20),
